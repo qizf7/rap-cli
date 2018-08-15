@@ -6,7 +6,7 @@
 
 ## 功能
 - 通过命令行查看接口文档。
-- 根据指定模板以模块、页面、接口为单位一键生成请求代码。
+- 根据指定模板以模块、页面、接口为单位批量生成请求代码。
 - 通过开放API修改接口mock数据，方便开发时修改rap mock服务返回数据。（TODO）
 - 根据项目接口文档，生成本地mock服务，方便无内网环境开发。（TODO）
 
@@ -71,6 +71,30 @@ module.exports = {
       }
     })
   }
+```
+
+通过上面的模板生成的代码
+```javascript
+/**
+  * 登录接口
+  * @see http://domain.com/workspace/myWorkspace.do?projectId=111#111
+  * @return code {number}  状态码 1微信会话失效 2加密串和偏移量错误
+  * @return msg {string}  提醒消息
+  * @return data {string}   返回的数据
+  *
+  */
+exports.checkSession = function (params) {
+  return request({
+    url: '/api/login',
+    method: 'POST',
+    data: {
+      code: params.code,  //小程序登录获取的code
+      encryptedData: params.encryptedData,  //小程序userinfo获取encryptedData
+      iv: params.iv,  //小程序userinfo获取iv
+    }
+  })
+}
+
 ```
 
 

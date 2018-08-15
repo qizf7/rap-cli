@@ -76,7 +76,6 @@ exports.findActionById = function(modelJSON, id) {
 /**
  * 获取模板
  */
-
 exports.getTemplate = function(filePath) {
   return new Promise((resolve, reject) => {
     fs.readFile(filePath, (err, data) => {
