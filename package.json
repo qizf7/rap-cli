@@ -2,8 +2,7 @@
   "name": "rap-cli",
   "version": "0.0.1",
   "description": "Rap command line tools.",
-  "main": "index.js",
-  "bin": "./src/index.js",
+  "bin": "./src/rap-cli.js",
   "scripts": {
     "test": "test"
   },
