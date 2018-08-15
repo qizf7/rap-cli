@@ -11,11 +11,9 @@ let rapRcPath = path.join(process.cwd(), './.raprc.js');
 if (fs.existsSync(rapRcPath)) {
   defaultConfig = require(rapRcPath)
 }
-console.log(defaultConfig)
 
 program
   .version('0.1.0');
-
 
 program
   .command('init')
@@ -56,6 +54,12 @@ program.on('command:*', function () {
   console.error('Invalid command: %s\nSee --help for a list of available commands.', program.args.join(' '));
   process.exit(1);
 });
+
+program.on('*', function () {
+  console.error('Invalid command: %s\nSee --help for a list of available commands.', program.args.join(' '));
+  process.exit(1);
+});
+
 
 program.parse(process.argv);
 

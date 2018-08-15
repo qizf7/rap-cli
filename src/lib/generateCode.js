@@ -116,7 +116,7 @@ function generateCodeByProject(project, template, output) {
 
 async function generateCode(options) {
   const loading = ora('Loading...').start();
-  const {success, data} = await service.queryRAPModel(options.domain, options.project);
+  const {success, data} = await service.queryRAPModel(options.server, options.project);
   loading.stop();
   compileAction = await utils.getTemplate(options.template);
   if (!success) {
