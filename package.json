@@ -1,6 +1,6 @@
 {
   "name": "rap-cli",
-  "version": "0.0.4",
+  "version": "0.0.3",
   "description": "Rap command line tools.",
   "bin": "./src/rap-cli.js",
   "scripts": {
@@ -12,6 +12,10 @@
   ],
   "author": "qizf",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/qizf7/rap-cli"
+  },
   "dependencies": {
     "axios": "^0.18.0",
     "cli-table-zh": "^0.3.1",
