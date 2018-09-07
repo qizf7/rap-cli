@@ -32,6 +32,7 @@ function generateCodeByInterface(options) {
     const actionDefinition = preProcessAction(action)
     let code = compileAction({
       domain: options.server,
+      projectId: options.project,
       ...actionDefinition
     });
     resolve(code);
@@ -59,7 +60,13 @@ function generateCodeByPage(options) {
     return
   }
   const interfaceCodes = page.actionList.map((action) => {
-    return compileAction(preProcessAction(action));
+    const actionDefinition = preProcessAction(action)
+    let code = compileAction({
+      domain: options.server,
+      projectId: options.project,
+      ...actionDefinition
+    });
+    return code;
   })
   fs.writeFile(output, interfaceCodes.join(''), err => {
     if (err) {
@@ -70,9 +77,9 @@ function generateCodeByPage(options) {
 
 function generateCodeByModule(options) {
   const module = utils.findModuleById(modelJSON, parseInt(options.module));
-  if (module) {
-  } else {
+  if (!module) {
     console.error(colors.red(`cannot found module with id ${colors.blue(options.module)}`))
+    return
   }
   let output = options.output || module.name;
   if (fs.existsSync(output)) {

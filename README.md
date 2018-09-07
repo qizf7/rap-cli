@@ -54,18 +54,20 @@ module.exports = {
 ```javascript
 /**
   * <%= name %> <%= description %>
-  * @see <%= domain %>/workspace/myWorkspace.do?projectId=218#<%= id %><% _.forEach(responseParameterList, function recurseParams(parameter, prefix = '') { %>
+  * @see <%= domain %>/workspace/myWorkspace.do?projectId=<%= projectId %>#<%= id %><% _.forEach(requestParameterList, function recurseParams(parameter, prefix = '') { %>
+  * @param <%= parameter.identifier %> {<%= parameter.dataType %>}  <%= parameter.name %> <%= parameter.remark %><% }) %>
+  * <% _.forEach(responseParameterList, function recurseParams(parameter, prefix = '') { %>
   * @return <%= parameter.identifier %> {<%= parameter.dataType %>}  <%= parameter.name %> <%= parameter.remark %><% }) %>
   */
-  export function <%= name %>(params) {
-    return request({
-      url: '<%= requestUrl %>',
-      method: '<%= requestType %>',
-      data: {<% _.forEach(requestParameterList, function(parameter) { %>
-        <%= parameter.identifier %>: params.<%= parameter.identifier %>,  //<%= parameter.name %> <%= parameter.remark %><% }) %>
-      }
-    })
-  }
+ export function <%= name %>(params) {
+  return request({
+    url: '<%= requestUrl %>',
+    method: '<%= requestType %>',
+    data: {<% _.forEach(requestParameterList, function(parameter) { %>
+      <%= parameter.identifier %>: params.<%= parameter.identifier %>, <% }) %>
+    }
+  })
+}
 ```
 
 通过上面的模板生成的代码
@@ -73,6 +75,9 @@ module.exports = {
 /**
   * 登录接口
   * @see http://domain.com/workspace/myWorkspace.do?projectId=111#111
+  * @param code {string} 小程序登录获取的code
+  * @param encryptedData {string} 加密数据
+  * @param iv {string} 偏移量
   * @return code {number}  状态码 1微信会话失效 2加密串和偏移量错误
   * @return msg {string}  提醒消息
   * @return data {string}   返回的数据
@@ -83,9 +88,9 @@ exports.checkSession = function (params) {
     url: '/api/login',
     method: 'POST',
     data: {
-      code: params.code,  //小程序登录获取的code
-      encryptedData: params.encryptedData,  //小程序userinfo获取encryptedData
-      iv: params.iv,  //小程序userinfo获取iv
+      code: params.code,
+      encryptedData: params.encryptedData,
+      iv: params.iv,
     }
   })
 }
@@ -103,6 +108,7 @@ exports.checkSession = function (params) {
 
 ## 计划
 [ ] 增加本地缓存
+[ ] 复杂请求&相应参数表示
 [ ] 内容过长导致表格错位
 [ ] 增加单元测试
 [ ] 通过开放API修改接口mock数据，方便开发时修改rap mock服务返回数据。（TODO）

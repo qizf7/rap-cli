@@ -18,7 +18,8 @@ function listActions(options) {
       console.log(colors.blue(`[ ${data.name} ${data.ver} ]`));
       console.log('');
       data.moduleList.forEach(module => {
-        console.log(colors.yellow(`${module.name}`));
+        console.log(colors.yellow(`module: ${module.name}`));
+        console.log(colors.yellow(`moduleId: ${module.id}`));
         module.pageList.forEach(page => {
           const pageTable = new Table({
             head: ['ID', 'Name', 'Method', 'URL', 'Description'],
