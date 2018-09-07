@@ -1,6 +1,6 @@
 {
   "name": "rap-cli",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "description": "Rap command line tools.",
   "bin": "./src/rap-cli.js",
   "scripts": {
