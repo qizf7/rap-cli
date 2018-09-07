@@ -29,9 +29,10 @@ function generateCodeByInterface(options) {
     return;
   }
   return new Promise((resolve, reject) => {
+    const actionDefinition = preProcessAction(action)
     let code = compileAction({
       domain: options.server,
-      ...preProcessAction(action)
+      ...actionDefinition
     });
     resolve(code);
     if (options.output) {

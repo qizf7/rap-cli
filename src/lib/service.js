@@ -1,9 +1,14 @@
 const axios = require('axios');
 const colors = require('colors');
 
-axios.defaults.timeout = 10000;
+const TIME_OUT = 10000;
 
-axios.interceptors.response.use(
+const rapApiAxios = axios.create({
+  timeout: TIME_OUT,
+});
+
+
+rapApiAxios.interceptors.response.use(
   response => {
     if (response.data.code === 200) {
       const data = (
@@ -34,7 +39,7 @@ axios.interceptors.response.use(
  * 查询所有接口
  */
 exports.queryModel = function (server, projectId) {
-  return axios.get(`${server}/api/queryModel.do`, {
+  return rapApiAxios.get(`${server}/api/queryModel.do`, {
     params: {
       projectId
     }
@@ -45,7 +50,7 @@ exports.queryModel = function (server, projectId) {
  * 查询所有接口数据
  */
 exports.queryRAPModel = function (server, projectId) {
-  return axios.get(`${server}/api/queryRAPModel.do`, {
+  return rapApiAxios.get(`${server}/api/queryRAPModel.do`, {
     params: {
       projectId
     }
@@ -53,7 +58,7 @@ exports.queryRAPModel = function (server, projectId) {
 }
 
 exports.queryMock = function (server, projectId, relativePath) {
-  return axios.get(`${server}/mockjs/${projectId}/${relativePath}`)
+  return rapApiAxios.get(`${server}/mockjs/${projectId}/${relativePath}`)
     .then((response) => {
       const { modelJSON, code, msg } = response.data;
       if (code === 200) {
