@@ -11,18 +11,8 @@ let compileAction = () => {};
 
 function preProcessAction(action) {
   action.requestType = enums.REQ_TYPE[action.requestType];
-  action.requestParameterList = action.requestParameterList.map(requestParameter => {
-    return {
-      ...requestParameter,
-      remark: utils.trimMock(requestParameter.remark)
-    }
-  });
-  action.responseParameterList = action.responseParameterList.map(requestParameter => {
-    return {
-      ...requestParameter,
-      remark: utils.trimMock(requestParameter.remark)
-    }
-  });
+  utils.trimParameterMock(action.requestParameterList);
+  utils.trimParameterMock(action.responseParameterList);
   return action;
 }
 
@@ -38,9 +28,11 @@ function generateCodeByInterface(options) {
     console.error(colors.red(`cannot found interface with id ${colors.blue(options.interface)}`))
     return;
   }
-
   return new Promise((resolve, reject) => {
-    let code = compileAction(preProcessAction(action));
+    let code = compileAction({
+      domain: options.server,
+      ...preProcessAction(action)
+    });
     resolve(code);
     if (options.output) {
       fs.writeFile(options.output, code, err => {
@@ -123,8 +115,17 @@ async function generateCode(options) {
     return;
   }
   modelJSON = data;
-  modelJSON = modelJSON.replace(/\\(?=')/g, '');
+  // 删除单引号前的\
+  modelJSON = modelJSON.replace(/(\\(?='))/g, '');
+  // 水平制表符替换为空格
+  modelJSON = modelJSON.replace(/\u0009/g, ' ');
   modelJSON = JSON.parse(modelJSON);
+
+  // fs.writeFile('modalJson.json', JSON.stringify(modelJSON, null, 2), err => {
+  //   if (err) {
+  //     reject(err)
+  //   }
+  // })
   if (options.interface) {
     generateCodeByInterface(options)
   }

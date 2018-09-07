@@ -30,7 +30,7 @@ program
   .option("--project <projectId>", "project id", defaultConfig.projectId)
   .option("--server <server>", "rap server", defaultConfig.server)
 
-  .option("-t, --template <fileName>", "template file", './request-template')
+  .option("-t, --template <fileName>", "template file", './.request-template.js')
   .option("-o, --output <fileName>", "output file or output directory")
   // .option("-a, --all", "generate request code by project")
   .option("-m, --module <moduleId>", "generate request code by moduleId")

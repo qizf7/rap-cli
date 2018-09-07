@@ -93,10 +93,20 @@ exports.getTemplate = function(filePath) {
 
 /**
  * trim @mock
+ * @todo
  */
 
-exports.trimMock = function (str) {
-  return str.replace(/@mock=.*/, '')
+exports.trimParameterMock = function (parameterList) {
+  for (let i = 0; i < parameterList.length; i++) {
+    const paramete = parameterList[i];
+    if (typeof paramete.remark === 'string') {
+      paramete.remark = paramete.remark.replace(/@mock=.*/, '')
+    }
+    if (paramete.parameterList) {
+      exports.trimParameterMock(paramete.parameterList)
+    }
+  }
+  return parameterList;
 }
 
 

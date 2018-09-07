@@ -1,6 +1,6 @@
 const colors = require('colors');
 const ora = require('ora');
-const Table = require('cli-table-zh');
+const Table = require('cli-table2');
 const service = require('./service');
 const enums = require('../enums');
 
